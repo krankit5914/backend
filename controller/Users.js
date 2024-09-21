@@ -57,4 +57,68 @@ RegisterController = async (req, res) => {
   }
 };
 
-module.exports = { RegisterController };
+GetUserController = async (req, res) => {
+  try {
+    const users = await userModel.find({}).sort({ createdAt: -1 });
+    res.status(200).send({
+      success: true,
+      counTotal: users.length,
+      message: "User List",
+      users,
+    });
+    console.log(users);
+  } catch (error) {
+    console.log(`Error in geting users ${error}`);
+    res.status(404).send({
+      success: false,
+      message: "Error in getting users",
+      error: error.message,
+    });
+  }
+};
+
+getUserByIdController = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await userModel.findById(id);
+    res.status(200).send({
+      success: true,
+      message: "User found",
+      user,
+    });
+    console.log(user);
+  } catch (error) {
+    console.log(`error in fetch user ${error}`);
+    res.status(404).send({
+      success: false,
+      message: "Error in getting user",
+      error: error.message,
+    });
+  }
+};
+
+DeleteUserController = async (req, res) => {
+  try {
+    const id = req.param._id;
+    const user = await userModel.deleteOne(id);
+    res.status(200).send({
+      success: true,
+      message: "User Deleted Successfully",
+    });
+    console.log(user);
+  } catch (error) {
+    console.log(`Error in deleting user ${error}`);
+    res.status(500).send({
+      success: false,
+      message: "Error in deleting user",
+      error: error.message,
+    });
+  }
+};
+
+module.exports = {
+  RegisterController,
+  GetUserController,
+  DeleteUserController,
+  getUserByIdController,
+};
