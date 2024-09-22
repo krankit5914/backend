@@ -4,8 +4,8 @@ const {
   RegisterController,
   GetUserController,
   DeleteUserController,
-  getUserByIdController,
-  updateUserController,
+  GetUserByIdController,
+  UpdateUserController,
 } = require("../controller/Users");
 
 // router Object
@@ -19,12 +19,12 @@ router.post("/register", RegisterController);
 router.get("/getusers", GetUserController);
 
 // getting user by id || method get
-router.get("/getuser/:id", getUserByIdController);
+router.get("/getuser/:id", GetUserByIdController);
 
 //deleting users || method delete
 router.delete("/deleteuser/:id", DeleteUserController);
 
 // Updating user by id || method put
-router.put("/updateuser/:id", updateUserController);
+router.put("/updateuser/:id", UpdateUserController);
 
 module.exports = router;

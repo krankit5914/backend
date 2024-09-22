@@ -80,7 +80,7 @@ GetUserController = async (req, res) => {
 };
 
 // getting user by id controller
-getUserByIdController = async (req, res) => {
+GetUserByIdController = async (req, res) => {
   try {
     const id = req.params.id;
     const user = await userModel.findById(id);
@@ -121,7 +121,7 @@ DeleteUserController = async (req, res) => {
 };
 
 // Update user by id controller
-updateUserController = async (req, res) => {
+UpdateUserController = async (req, res) => {
   try {
     const id = req.params.id;
     const user = await userModel.findByIdAndUpdate(id, req.body, {
@@ -146,6 +146,6 @@ module.exports = {
   RegisterController,
   GetUserController,
   DeleteUserController,
-  getUserByIdController,
-  updateUserController
+  GetUserByIdController,
+  UpdateUserController
 };
