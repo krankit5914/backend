@@ -1,5 +1,6 @@
 const userModel = require("../models/Users");
 
+// users registration controller
 RegisterController = async (req, res) => {
   try {
     const { name, email, password, phone_no, address } = req.body;
@@ -57,6 +58,7 @@ RegisterController = async (req, res) => {
   }
 };
 
+// getting users controller
 GetUserController = async (req, res) => {
   try {
     const users = await userModel.find({}).sort({ createdAt: -1 });
@@ -77,6 +79,7 @@ GetUserController = async (req, res) => {
   }
 };
 
+// getting user by id controller
 getUserByIdController = async (req, res) => {
   try {
     const id = req.params.id;
@@ -97,6 +100,7 @@ getUserByIdController = async (req, res) => {
   }
 };
 
+// Delete user by id controller
 DeleteUserController = async (req, res) => {
   try {
     const id = req.param._id;
@@ -116,9 +120,32 @@ DeleteUserController = async (req, res) => {
   }
 };
 
+// Update user by id controller
+updateUserController = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await userModel.findByIdAndUpdate(id, req.body, {
+      new: true,
+      });
+      res.status(200).send({
+        success: true,
+        message: "User Updated Successfully",
+        });
+        console.log(user);
+      }catch(error){
+        console.log(`Error in updating user ${error}`)
+        res.status(500).send({
+          success: false,
+          message: "Error in updating user",
+          error: error.message,
+          });
+      };    
+    } 
+
 module.exports = {
   RegisterController,
   GetUserController,
   DeleteUserController,
   getUserByIdController,
+  updateUserController
 };

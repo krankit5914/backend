@@ -4,7 +4,8 @@ const {
   RegisterController,
   GetUserController,
   DeleteUserController,
-  getUserByIdController
+  getUserByIdController,
+  updateUserController,
 } = require("../controller/Users");
 
 // router Object
@@ -22,5 +23,8 @@ router.get("/getuser/:id", getUserByIdController);
 
 //deleting users || method delete
 router.delete("/deleteuser/:id", DeleteUserController);
+
+// Updating user by id || method put
+router.put("/updateuser/:id", updateUserController);
 
 module.exports = router;
