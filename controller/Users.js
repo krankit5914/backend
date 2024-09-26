@@ -1,4 +1,5 @@
 const userModel = require("../models/Users");
+const { hashPassword } = require("../helper/User");
 
 // users registration controller
 RegisterController = async (req, res) => {
@@ -35,10 +36,12 @@ RegisterController = async (req, res) => {
       });
     }
 
+    const hashedPassword = await hashPassword(password);
+
     const user = await new userModel({
       name,
       email,
-      password,
+      password: hashedPassword,
       phone_no,
       address,
     }).save();
@@ -126,26 +129,26 @@ UpdateUserController = async (req, res) => {
     const id = req.params.id;
     const user = await userModel.findByIdAndUpdate(id, req.body, {
       new: true,
-      });
-      res.status(200).send({
-        success: true,
-        message: "User Updated Successfully",
-        });
-        console.log(user);
-      }catch(error){
-        console.log(`Error in updating user ${error}`)
-        res.status(500).send({
-          success: false,
-          message: "Error in updating user",
-          error: error.message,
-          });
-      };    
-    } 
+    });
+    res.status(200).send({
+      success: true,
+      message: "User Updated Successfully",
+    });
+    console.log(user);
+  } catch (error) {
+    console.log(`Error in updating user ${error}`);
+    res.status(500).send({
+      success: false,
+      message: "Error in updating user",
+      error: error.message,
+    });
+  }
+};
 
 module.exports = {
   RegisterController,
   GetUserController,
   DeleteUserController,
   GetUserByIdController,
-  UpdateUserController
+  UpdateUserController,
 };
